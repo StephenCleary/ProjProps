@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <ToolCommandName>projprops</ToolCommandName>
+    <NoWarn>CA2007</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Build" Version="16.6.0" />
+    <PackageReference Include="Microsoft.Build.Utilities.Core" Version="16.6.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.8" />
+    <PackageReference Include="System.CommandLine.Hosting" Version="0.3.0-alpha.20371.2" />
+    <PackageReference Include="Thinktecture.Extensions.Logging.Configuration" Version="2.0.0" />
+  </ItemGroup>
+
+</Project>
