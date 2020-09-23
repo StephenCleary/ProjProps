@@ -7,9 +7,9 @@
 
   <!-- Project-specific settings -->
   <PropertyGroup>
-    <VersionPrefix>1.0.0-pre01</VersionPrefix>
+    <VersionPrefix>1.0.0-pre02</VersionPrefix>
     <Authors>Stephen Cleary</Authors>
-    <PackageTags></PackageTags>
+    <PackageTags>msbuild;property</PackageTags>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
