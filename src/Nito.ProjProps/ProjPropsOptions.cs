@@ -15,6 +15,7 @@ internal sealed class ProjPropsOptions
     public bool IncludeGlobal { get; set; }
     public bool IncludeImported { get; set; } = true;
     public bool IncludeReserved { get; set; }
+    public bool IncludePrimary { get; set; } = true;
     public bool Debug { get; set; }
  
     public static RootCommand DefineOptions(RootCommand command)
@@ -80,6 +81,7 @@ internal sealed class ProjPropsOptions
         command.AddOption(new Option<bool>("--include-global", "Include global properties"));
         command.AddOption(new Option<bool>("--include-imported", () => true, "Include imported properties"));
         command.AddOption(new Option<bool>("--include-reserved", "Include reserved/builtin properties"));
+        command.AddOption(new Option<bool>("--include-primary", () => true, "Include primary project properties"));
         command.AddOption(new Option<bool>("--debug", "Enable debug logging"));
         return command;
     }

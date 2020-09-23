@@ -131,6 +131,12 @@ internal sealed class Worker
             return false;
         }
 
+        if (!prop.IsEnvironmentProperty && !prop.IsGlobalProperty && !prop.IsImported && !prop.IsReservedProperty && !_options.IncludePrimary)
+        {
+            _logger.LogDebug("Skipping {name} because it is a primary property.", prop.Name);
+            return false;
+        }
+
         if (_nameRegex != null && !_nameRegex.IsMatch(prop.Name))
         {
             _logger.LogDebug("Skipping {name} because it does not match {regex}.", prop.Name, _options.Name);
