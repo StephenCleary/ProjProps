@@ -35,7 +35,7 @@ namespace ProjProps
 
         private static CommandLineBuilder BuildCommandLine()
         {
-            var root = new RootCommand();
+            var root = new RootCommand("Display project properties.") { Name = "projprops" };
             ProjPropsOptions.DefineOptions(root);
             root.Handler = CommandHandler.Create<IHost>(host => host.Services.GetRequiredService<Worker>().Execute());
             return new CommandLineBuilder(root);
