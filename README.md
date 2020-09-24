@@ -19,7 +19,7 @@ E.g., `projprops --name version` will evaluate the project file in the current d
 
 ## Filtering Output
 
-By default, `projprops` displays all properties for the current project, including properties imported from SDK or other files, but excluding all other properties. You can include environment variable properties, global properties, or reserved properties by specifying the appropriate command line options (e.g., `--include-reserved`).
+By default, `projprops` displays all properties for the current project, including properties imported from SDK or other imported files, but excluding all other properties. You can include environment variable properties, global properties, or reserved properties by disabling the corresponding option (e.g., `--exclude-reserved false`).
 
 You can also filter properties by name. The `--name` command line parameter takes a case-insensitive regular expression, and only properties matching that expression are displayed. `projprops --name ".*pack.*"` displays all properties with `"pack"` in the name, and `projprops --name version` displays only the `Version` property.
 

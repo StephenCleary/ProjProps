@@ -101,37 +101,37 @@ internal sealed class Worker
 
     private bool FilterProperty(ProjectProperty prop)
     {
-        if (prop.IsEnvironmentProperty && !_options.IncludeEnvironment)
+        if (prop.IsEnvironmentProperty && _options.ExcludeEnvironment)
         {
             _logger.LogDebug("Skipping {name} because it is an environment property.", prop.Name);
             return false;
         }
 
-        if (prop.IsGlobalProperty && !_options.IncludeGlobal)
+        if (prop.IsGlobalProperty && _options.ExcludeGlobal)
         {
             _logger.LogDebug("Skipping {name} because it is a global property.", prop.Name);
             return false;
         }
         
-        if (prop.IsImported && !_options.IncludeImported)
+        if (prop.IsImported && _options.ExcludeImported)
         {
             _logger.LogDebug("Skipping {name} because it is an imported property.", prop.Name);
             return false;
         }
         
-        if (prop.IsReservedProperty && !_options.IncludeReserved)
+        if (prop.IsReservedProperty && _options.ExcludeReserved)
         {
             _logger.LogDebug("Skipping {name} because it is a reserved property.", prop.Name);
             return false;
         }
         
-        if (prop.IsGlobalProperty && !_options.IncludeGlobal)
+        if (prop.IsGlobalProperty && _options.ExcludeGlobal)
         {
             _logger.LogDebug("Skipping {name} because it is a global property.", prop.Name);
             return false;
         }
 
-        if (!prop.IsEnvironmentProperty && !prop.IsGlobalProperty && !prop.IsImported && !prop.IsReservedProperty && !_options.IncludePrimary)
+        if (!prop.IsEnvironmentProperty && !prop.IsGlobalProperty && !prop.IsImported && !prop.IsReservedProperty && _options.ExcludePrimary)
         {
             _logger.LogDebug("Skipping {name} because it is a primary property.", prop.Name);
             return false;

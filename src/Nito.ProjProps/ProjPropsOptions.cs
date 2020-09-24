@@ -11,11 +11,11 @@ internal sealed class ProjPropsOptions
     public string Project { get; set; } = null!;
     public OutputFormatEnum OutputFormat { get; set; }
     public List<(string Name, string Value)> Properties { get; set; } = new List<(string, string)>();
-    public bool IncludeEnvironment { get; set; }
-    public bool IncludeGlobal { get; set; }
-    public bool IncludeImported { get; set; } = true;
-    public bool IncludeReserved { get; set; }
-    public bool IncludePrimary { get; set; } = true;
+    public bool ExcludeEnvironment { get; set; } = true;
+    public bool ExcludeGlobal { get; set; } = true;
+    public bool ExcludeImported { get; set; }
+    public bool ExcludeReserved { get; set; } = true;
+    public bool ExcludePrimary { get; set; }
     public bool Debug { get; set; }
  
     public static RootCommand DefineOptions(RootCommand command)
@@ -77,11 +77,11 @@ internal sealed class ProjPropsOptions
                     return null;
                 }).FirstOrDefault(x => x != null)),
         });
-        command.AddOption(new Option<bool>("--include-environment", "Include properties from the environment"));
-        command.AddOption(new Option<bool>("--include-global", "Include global properties"));
-        command.AddOption(new Option<bool>("--include-imported", () => true, "Include imported properties"));
-        command.AddOption(new Option<bool>("--include-reserved", "Include reserved/builtin properties"));
-        command.AddOption(new Option<bool>("--include-primary", () => true, "Include primary project properties"));
+        command.AddOption(new Option<bool>("--exclude-environment", () => true, "Exclude properties set from environment variables"));
+        command.AddOption(new Option<bool>("--exclude-global", () => true, "Exclude global properties"));
+        command.AddOption(new Option<bool>("--exclude-imported", "Exclude imported properties"));
+        command.AddOption(new Option<bool>("--exclude-reserved", () => true, "Exclude reserved/builtin properties"));
+        command.AddOption(new Option<bool>("--exclude-primary", "Exclude properties defined in the primary project file"));
         command.AddOption(new Option<bool>("--debug", "Enable debug logging"));
         return command;
     }
