@@ -9,7 +9,7 @@ Install the [Nito.ProjProps](https://www.nuget.org/packages/Nito.ProjProps) pack
 
 # Usage
 
-`projprops` is a dotnet cli tool that evaluates and displays MSBuild project properties. It is primarily used in build scripts or devops scenarios.
+`projprops` is a dotnet cli tool that evaluates and displays MSBuild project properties. It is primarily used in build scripts, but can be used anytime you need to evaluate MSBuild properties.
 
 E.g., `projprops --name version` will evaluate the project file in the current directory and display its `Version` property. The project file is evaluated, so the project file may set `Version` directly, or `Version` may be inferred from `VersionPrefix` and `VersionSuffix`, or `Version` may be set by `Directory.Build.props`, etc.
 
@@ -38,3 +38,7 @@ The `--output-format` option allows specifying `Json`, which displays all proper
 ## Debugging
 
 If you want voluminous output to track down what's going wrong, pass the `--debug` command line option. You might want to pipe it to a file, because this will generate a lot of output.
+
+# Limitations
+
+`projprops` was designed to work with .NET Core SDK-style project files. If you're targeting full framework and/or using the old verbose project file syntax, then it might not work correctly. Please do create an issue if you have any trouble!
