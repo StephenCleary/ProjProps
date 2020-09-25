@@ -25,7 +25,7 @@ You can also filter properties by name. The `--name` command line parameter take
 
 ## Formatting Output
 
-By default, `projprops` displays each property on a single line, with any non-printable or non-ASCII characters displayed as percent-encoded UTF-16 code points, e.g., `%000A%000D` for `\r\n`.
+By default, `projprops` displays each property on a single line, with any non-printable or non-ASCII characters displayed as percent-encoded UTF-8 code points, e.g., `%0A%0D` for `\r\n`, and `%25` for `%`. Percent-encoding is done for any character less than `U+0020`, greater than `U+007E`, or equal to `U+0025` (the `%` symbol).
 
 The `--output-format` option allows specifying `Json`, which displays all properties as a single JSON object, with the property names as keys and the property values as the string values of the JSON object.
 

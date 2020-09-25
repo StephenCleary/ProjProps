@@ -15,6 +15,8 @@ using Thinktecture.Extensions.Configuration;
 #pragma warning disable CA1812
 internal sealed class Worker
 {
+    private static readonly Encoding Utf8 = new UTF8Encoding(encoderShouldEmitUTF8Identifier: false);
+
     private readonly IHostApplicationLifetime _hostApplicationLifetime;
     private readonly ILogger<Worker> _logger;
     private readonly BuildLogger _buildLogger;
@@ -89,12 +91,13 @@ internal sealed class Worker
     private static string PercentEncode(string input)
     {
         var result = new StringBuilder(input.Length);
-        foreach (char ch in input)
+        var bytes = Utf8.GetBytes(input);
+        foreach (byte ch in bytes)
         {
             if ((ch >= ' ' && ch <= '$') || (ch >= '&' && ch <= '~'))
-                result.Append(ch);
+                result.Append((char) ch);
             else
-                result.Append($"%{(ushort)ch:X4}");
+                result.Append($"%{ch:X2}");
         }
         return result.ToString();
     }
