@@ -42,4 +42,3 @@ jobs:
         tag_prefix: ''
         custom_tag: ${{ env.NEWTAG }}
         release_branches: .*
-        dry_run: true
