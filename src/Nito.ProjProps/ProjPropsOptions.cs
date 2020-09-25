@@ -16,42 +16,14 @@ internal sealed class ProjPropsOptions
     public bool ExcludeImported { get; set; }
     public bool ExcludeReserved { get; set; } = true;
     public bool ExcludePrimary { get; set; }
+    public bool ProjectSearch { get; set; }
     public bool Debug { get; set; }
  
     public static RootCommand DefineOptions(RootCommand command)
     {
         command.AddOption(new Option<string>("--name", "Only include properties whose names match the specified regular expression."));
-        command.AddOption(new Option<string>("--project")
-        {
-            Description = "Project file, or directory containing a single project file.",
-            Argument = new Argument<string>(argumentResult =>
-            {
-                var project = argumentResult.Tokens.SingleOrDefault()?.Value ?? Directory.GetCurrentDirectory();
-                if (Directory.Exists(project))
-                {
-                    string[] projectFiles = Directory.GetFiles(project, "*.*proj");
-                    if (projectFiles.Length == 0)
-                    {
-                        argumentResult.ErrorMessage = $"No project files found in {project}.";
-                        return null!;
-                    }
-                    else if (projectFiles.Length > 1)
-                    {
-                        argumentResult.ErrorMessage = $"Multiple project files found in {project}.";
-                        return null!;
-                    }
-                    project = projectFiles[0];
-                }
-
-                if (!File.Exists(project))
-                {
-                    argumentResult.ErrorMessage = $"Project {project} not found.";
-                    return null!;
-                }
-
-                return project;
-            }, isDefault: true),
-        });
+        command.AddOption(new Option<string>("--project", "Project file, or directory containing a single project file."));
+        command.AddOption(new Option<bool>("--project-search", "Use the first project found in any subdirectory."));
         command.AddOption(new Option<OutputFormatEnum>("--output-format", () => OutputFormatEnum.SingleLinePercentEncode, "The formatting used to display project properties."));
         command.AddOption(new Option<List<(string, string)>>("--properties")
         {

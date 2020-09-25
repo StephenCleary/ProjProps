@@ -41,13 +41,18 @@ internal sealed class Worker
             runtimeLoggingConfiguration.SetLevel(LogLevel.Debug);
     }
 
-    public void Execute()
+    public int Execute()
     {
         try
         {
+            if (!TryFindProject(out var projectFile))
+                return -1;
+
             // Thanks to https://daveaglick.com/posts/running-a-design-time-build-with-msbuild-apis
-            string toolsPath = GetCoreToolsPath(_options.Project);
-            var environmentSettings = GetCoreEnvironmentSettings(_options.Project, toolsPath);
+            _logger.LogDebug("Evaluating project {project}", projectFile);
+            string toolsPath = GetCoreToolsPath(projectFile);
+            _logger.LogDebug("Tools path: {path}", toolsPath);
+            var environmentSettings = GetCoreEnvironmentSettings(projectFile, toolsPath);
             
             foreach (var prop in environmentSettings)
                 Environment.SetEnvironmentVariable(prop.Key, prop.Value);
@@ -57,7 +62,7 @@ internal sealed class Worker
             foreach (var globalProperty in _options.Properties)
                 collection.SetGlobalProperty(globalProperty.Name, globalProperty.Value);
 
-            var project = collection.LoadProject(_options.Project);
+            var project = collection.LoadProject(projectFile);
             var properties = new SortedDictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
             foreach (var prop in project.AllEvaluatedProperties.Where(FilterProperty))
                 properties[prop.Name] = prop.EvaluatedValue;
@@ -77,16 +82,52 @@ internal sealed class Worker
                 foreach (var prop in properties)
                     Console.WriteLine($"{prop.Key}={PercentEncode(prop.Value)}");
             }
+
+            return 0;
         }
+#pragma warning disable CA1031
         catch (Exception ex)
+#pragma warning restore
         {
             _logger.LogCritical(ex, "Fatal error");
-            throw;
+            return -1;
         }
         finally
         {
             _hostApplicationLifetime.StopApplication();
         }
+    }
+
+    private bool TryFindProject(out string project)
+    {
+        project = _options.Project;
+        if (project == null)
+            project = Directory.GetCurrentDirectory();
+
+        if (Directory.Exists(project))
+        {
+            var searchOption = _options.ProjectSearch ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
+            string[] projectFiles = Directory.GetFiles(project, "*.*proj", searchOption);
+            if (projectFiles.Length == 0)
+            {
+                _logger.LogCritical($"No project files found in {project}.");
+                return false;
+            }
+            else if (projectFiles.Length > 1 && !_options.ProjectSearch)
+            {
+                _logger.LogCritical($"Multiple project files found in {project}.");
+                return false;
+            }
+            project = projectFiles[0];
+        }
+
+        if (!File.Exists(project))
+        {
+            _logger.LogCritical($"Project {project} not found.");
+            return false;
+        }
+
+        return true;
     }
 
     private static string PercentEncode(string input)
