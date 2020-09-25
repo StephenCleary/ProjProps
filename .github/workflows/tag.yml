@@ -31,9 +31,15 @@ jobs:
     - name: Get current version
       run: |
         dotnet tool install --global Nito.ProjProps --version 1.0.0-pre06
-        echo ::set-env name=VERSION::v$(projprops --name version --output-format SingleValueOnly --project src/Nito.ProjProps)
+        echo ::set-env name=NEWTAG::v$(projprops --name version --output-format SingleValueOnly --project src/Nito.ProjProps)
 
     - name: Create tag
-      if: format('v{0}', env.VERSION) != steps.existingtag.outputs.tag
-      run: |
-        echo Create tag $VERSION
+      if: env.NEWTAG != steps.existingtag.outputs.tag
+      uses: mathieudutour/github-tag-action@v4.5
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        default_bump: false
+        tag_prefix: ''
+        custom_tag: ${{ env.NEWTAG }}
+        release_branches: .*
+        dry_run: true
