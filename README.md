@@ -41,4 +41,4 @@ If you want voluminous output to track down what's going wrong, pass the `--debu
 
 # Limitations
 
-`projprops` was designed to work with .NET Core SDK-style project files. If you're targeting full framework and/or using the old verbose project file syntax, then it might not work correctly. Please do create an issue if you have any trouble!
+`projprops` was designed to work with .NET Core SDK-style project files. If you're using the old verbose project file syntax, then it probably will not work. Please do create an issue if this capability is important to you.
