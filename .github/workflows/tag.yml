@@ -32,9 +32,8 @@ jobs:
       run: |
         dotnet tool install --global Nito.ProjProps --version 1.0.0-pre06
         echo ::set-env name=VERSION::v$(projprops --name version --output-format SingleValueOnly --project src/Nito.ProjProps)
-        echo $VERSION
 
     - name: Create tag
       if: format('v{0}', env.VERSION) != steps.existingtag.outputs.tag
       run: |
-        echo Create tag
+        echo Create tag $VERSION
