@@ -31,4 +31,4 @@ jobs:
     - name: Get current version
       run: |
         dotnet tool install --global Nito.ProjProps --version 1.0.0-pre06
-        echo ::set-env name=VERSION::$(dotnet projprops --name version --output-format SingleValueOnly --project src/Nito.ProjProps)
+        echo ::set-env name=VERSION::$(projprops --name version --output-format SingleValueOnly --project src/Nito.ProjProps)
