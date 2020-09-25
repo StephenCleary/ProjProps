@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using Microsoft.Build.Evaluation;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -183,8 +184,9 @@ internal sealed class Worker
         // Execute the process
         using (Process process = Process.Start(startInfo))
         {
+            var stdoutTask = Task.Run(() => process.StandardOutput.ReadToEnd());
             process.WaitForExit();
-            var stdout = process.StandardOutput.ReadToEnd();
+            var stdout = stdoutTask.GetAwaiter().GetResult();
             return ParseCoreBasePath(stdout);
         }
     }
