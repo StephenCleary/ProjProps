@@ -26,6 +26,7 @@ jobs:
     - name: Get existing tag
       id: existingtag
       uses: WyriHaximus/github-action-get-previous-tag@0.2.0
+      continue-on-error: true
 
     - name: Get current version
       run: |
