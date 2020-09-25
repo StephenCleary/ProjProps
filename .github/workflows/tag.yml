@@ -36,5 +36,5 @@ jobs:
     - name: Create tag
       if: env.NEWTAG != steps.existingtag.outputs.tag
       run: |
-        git tag %{{ env.NEWTAG }}
+        git tag ${{ env.NEWTAG }}
         git push --tags
