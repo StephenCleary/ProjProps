@@ -30,8 +30,8 @@ jobs:
 
     - name: Get current version
       run: |
-        dotnet tool install --global Nito.ProjProps --version 1.0.0-pre06
-        echo ::set-env name=NEWTAG::v$(projprops --name version --output-format SingleValueOnly --project src/Nito.ProjProps)
+        dotnet tool install --global Nito.ProjProps --version 1.0.0-pre07
+        echo ::set-env name=NEWTAG::v$(projprops --name version --output-format SingleValueOnly --project-search)
 
     - name: Create tag
       if: env.NEWTAG != steps.existingtag.outputs.tag
