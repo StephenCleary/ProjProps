@@ -17,6 +17,8 @@ E.g., `projprops --name version` will evaluate the project file in the current d
 
 `projprops` evaluates a single project, similar to how `dotnet run` works. `projprops` will evaluate the project in the current directory by default, or the project specified with the `--project` command line parameter.
 
+Alternatively, you may pass `--project-search`, which will cause `projprops` to search for project files in any subdirectory of the current directory, and just use the first one it finds. This is most useful when displaying properties set in `Directory.Build.props` files.
+
 ## Filtering Output
 
 By default, `projprops` displays all properties for the current project, including properties imported from SDK or other imported files, but excluding all other properties. You can include environment variable properties, global properties, or reserved properties by disabling the corresponding option (e.g., `--exclude-reserved false`).
