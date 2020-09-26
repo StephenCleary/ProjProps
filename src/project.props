@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup>
+    <VersionPrefix>1.0.0</VersionPrefix>
+    <Authors>Stephen Cleary</Authors>
+    <Description>A dotnet tool that displays project properties.</Description>
+    <PackageTags>msbuild;property</PackageTags>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+</Project>

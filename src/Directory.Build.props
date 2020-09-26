@@ -1,18 +1,12 @@
 <Project>
   <!--
-      Directory.Build.props v1.1
+      Directory.Build.props v2.0
+      - 2.0 Move project-specific properties to `project.props`.
       - 1.1 Remove workaround for .NET SDK bug that was necesary for coverlet to work.
       - 1.0 Initial release.
   -->
 
-  <!-- Project-specific settings -->
-  <PropertyGroup>
-    <VersionPrefix>1.0.0</VersionPrefix>
-    <Authors>Stephen Cleary</Authors>
-    <Description>A dotnet tool that displays project properties.</Description>
-    <PackageTags>msbuild;property</PackageTags>
-    <LangVersion>latest</LangVersion>
-  </PropertyGroup>
+  <Import Project="$(MSBuildThisFileDirectory)project.props" />
 
   <!-- Project quality settings -->
   <PropertyGroup>
