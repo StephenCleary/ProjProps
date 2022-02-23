@@ -49,7 +49,6 @@ namespace ProjProps
                 .ConfigureServices((hostContext, services) =>
                 {
                     services.AddOptions<ProjPropsOptions>().BindCommandLine();
-                    services.AddSingleton<BuildLogger>();
                     services.AddSingleton<Worker>();
                     services.AddSingleton(runtimeLoggingConfiguration);
                 });
