@@ -44,3 +44,13 @@ If you want voluminous output to track down what's going wrong, pass the `--debu
 # Limitations
 
 `projprops` was designed to work with .NET Core SDK-style project files. If you're using the old verbose project file syntax, then it probably will not work. Please do create an issue if this capability is important to you.
+
+# Release Notes
+
+## 1.1.0
+
+* Update to net6 using MSBuild 17.
+
+## 1.0.0
+
+* Initial release using net3.1 MSBuild 16.
