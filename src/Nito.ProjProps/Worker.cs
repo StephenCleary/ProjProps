@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -139,7 +140,7 @@ internal sealed class Worker
             if ((ch >= ' ' && ch <= '$') || (ch >= '&' && ch <= '~'))
                 result.Append((char) ch);
             else
-                result.Append($"%{ch:X2}");
+                result.Append(CultureInfo.InvariantCulture, $"%{ch:X2}");
         }
         return result.ToString();
     }
@@ -223,7 +224,7 @@ internal sealed class Worker
         };
 
         // Execute the process
-        using (Process process = Process.Start(startInfo))
+        using (Process process = Process.Start(startInfo)!)
         {
             var stdoutTask = Task.Run(() => process.StandardOutput.ReadToEnd());
             process.WaitForExit();
